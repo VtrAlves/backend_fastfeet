@@ -2,8 +2,10 @@ import express from 'express'
 
 import routes from './routes'
 
+import './database'
+
 class App {
-  public server:express.Application
+  public server: express.Application
 
   constructor () {
     this.server = express()
@@ -16,7 +18,7 @@ class App {
     this.server.use(express.json())
   }
 
-  private routes ():void {
+  private routes (): void {
     this.server.use(routes)
   }
 }
