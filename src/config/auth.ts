@@ -1,4 +1,6 @@
 export default {
-  secret: 'bc5f50c7f0c4032490bc0cf568ccb929',
+  secret: '56760cc29094a2b9325d7976fa9d60ba',
   expiresIn: '1h'
 }
+
+// gostackFastFeet

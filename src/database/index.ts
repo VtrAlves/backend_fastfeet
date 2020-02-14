@@ -23,10 +23,8 @@ class Database {
       { define, dialect: 'postgres', host }
     )
 
-    console.log(this.connection)
-
     models.map(model => model.initialize(this.connection))
   }
 }
 
-export default Database
+export default new Database()
