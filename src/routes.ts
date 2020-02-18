@@ -5,9 +5,13 @@ import SessionController from './app/controllers/Session'
 
 const routes = Router()
 
-routes.post('/users', UserController.store)
-routes.post('/login', SessionController.store)
+routes.get('/users', UserController.read)
 
-routes.put('/users', UserController.update)
+routes.post('/users', UserController.store)
+routes.post('/sessions', SessionController.store)
+
+routes.put('/users/:id', UserController.update)
+
+routes.delete('/users/:id', UserController.delete)
 
 export default routes
