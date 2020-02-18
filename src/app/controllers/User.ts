@@ -18,7 +18,6 @@ class UserController {
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ message: 'Validation fails' })
     }
-    console.log('Email Exists')
     const emailExists = await User.findOne({ where: { email: req.body.email } })
 
     if (emailExists) {
@@ -48,33 +47,45 @@ class UserController {
 
     const { id } = req.params
 
-    if (!id) {
-      return res.status(400).json({ message: 'Invalid id ' })
-    }
-
     const user = await User.findByPk(id)
 
-    const { email, oldPassword } = req.body
+    if (!id || !user) {
+      return res.status(400).json({ message: 'ID not found' })
+    }
 
+    const { email, oldPassword } = req.body
     if (email && user.email !== email) {
-      const userExists = await User.findOne({ where: email })
+      const userExists = await User.findOne({ where: { email } })
 
       if (userExists) {
         return res.status(400).json({ message: 'Email already exists' })
       }
-
-      if()
+    }
+    if (oldPassword && !(await user.chkPassword(oldPassword))) {
+      return res.status(400).json({ message: 'Passwords doesn\'t match' })
     }
 
-    return res.json({ message: 'Em desenvolvimento' })
-  }
+    const oldUser = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      'last update': user.updatedAt
+    }
 
-  async read (req: Request, res: Response): Promise<Response> {
-    return res.json({ message: 'Em desenvolvimento' })
-  }
+    const updatedUser = await user.update(req.body)
 
-  async delete (req: Request, res: Response): Promise<Response> {
-    return res.json({ message: 'Em desenvolvimento' })
+    const newUser = {
+      id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      'last update': updatedUser.updatedAt
+    }
+
+    return res.json({
+      message: 'User Updated Successfuly',
+      oldUser,
+      newUser
+    })
   }
 }
 

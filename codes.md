@@ -17,3 +17,5 @@ yarn sequelize db:migrate:undo
 ###desfazer todas as migrations
 
 yarn sequelize db:migrate:undo:all
+
+#Seeds
