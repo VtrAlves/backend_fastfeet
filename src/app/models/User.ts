@@ -28,7 +28,8 @@ class User extends Model implements UserInterface {
             }
           }
         },
-        sequelize
+        sequelize,
+        modelName: 'user'
       }
     )
   }
