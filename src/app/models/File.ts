@@ -15,7 +15,7 @@ class File extends Model implements FileInterface {
         name: Sequelize.STRING,
         path: Sequelize.STRING,
         url: {
-          type: Sequelize.STRING,
+          type: Sequelize.VIRTUAL,
           get (): string {
             return `${process.env.APP_URL}/files/${this.path}`
           }

@@ -1,12 +1,13 @@
 import { Sequelize } from 'sequelize'
 
+import Deliveryman from '../app/models/Deliveryman'
+import File from '../app/models/File'
 import User from '../app/models/User'
 import Recipient from '../app/models/Recipient'
-import File from '../app/models/File'
 
 import dbConfig from '../config/database'
 
-const models = [User, Recipient, File]
+const models = [Deliveryman, User, Recipient, File]
 
 class Database {
   private connection: Sequelize
@@ -26,6 +27,9 @@ class Database {
     )
 
     models.map(model => model.initialize(this.connection))
+    models.map(
+      model => model.associate && model.associate(this.connection.models)
+    )
   }
 }
 

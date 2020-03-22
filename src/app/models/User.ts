@@ -34,7 +34,7 @@ class User extends Model implements UserInterface {
     )
   }
 
-  chkPassword (password): boolean {
+  chkPassword (password: string): boolean {
     return bcrypt.compare(password, this.passwordHash)
   }
 }
