@@ -9,6 +9,7 @@ class User extends Model implements UserInterface {
   public email: string
   public passwordHash: string
   public password: string
+  public administrator: boolean
   public createdAt: Date
   public updatedAt: Date
 
@@ -18,7 +19,8 @@ class User extends Model implements UserInterface {
         name: Sequelize.STRING,
         email: Sequelize.STRING,
         passwordHash: Sequelize.STRING,
-        password: Sequelize.VIRTUAL
+        password: Sequelize.VIRTUAL,
+        administrator: Sequelize.BOOLEAN
       },
       {
         hooks: {

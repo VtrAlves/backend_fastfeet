@@ -20,7 +20,14 @@ export default async (
   try {
     const decoded = await promisify(jwt.verify)(token, authConfig.secret)
 
-    req.params.userId = decoded.id
+    const { administrator } = decoded
+
+    if (!administrator) {
+      return res
+        .status(401)
+        .json({ message: 'Access Denied. Please contact system administrator' })
+    }
+
     next()
   } catch (e) {
     return res.status(401).json({ message: 'Token invalid' })

@@ -21,7 +21,7 @@ class DeliverymanController {
     try {
       const { id } = await Deliveryman.create(req.body)
 
-      const newDeliveryman = await Deliveryman.findByPk(id, {
+      const { name, email, avatar } = await Deliveryman.findByPk(id, {
         attributes: ['id', 'name', 'email'],
         include: {
           model: File,
@@ -32,7 +32,7 @@ class DeliverymanController {
 
       return res.status(200).json({
         message: 'Deliveryman created successfuly',
-        data: { id, newDeliveryman }
+        data: { id, name, email, avatar }
       })
     } catch (e) {
       return res.status(500).json({ message: e })
