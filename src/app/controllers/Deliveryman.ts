@@ -32,7 +32,10 @@ class DeliverymanController {
 
       return res.status(200).json({
         message: 'Deliveryman created successfuly',
-        data: { id, name, email, avatar }
+        id,
+        name,
+        email,
+        avatar
       })
     } catch (e) {
       return res.status(500).json({ message: e })
@@ -49,9 +52,10 @@ class DeliverymanController {
       }
     })
 
-    return res
-      .status(200)
-      .json({ message: 'Showing all Deliverymans', data: newDeliveryman })
+    return res.status(200).json({
+      message: 'Showing all Deliverymans',
+      deliverymans: newDeliveryman
+    })
   }
 
   async update (req: Request, res: Response): Promise<Response> {
@@ -118,7 +122,7 @@ class DeliverymanController {
 
     return res.json({
       message: `Deliveryman ${oldData.name} excluded successfuly`,
-      data: oldData
+      oldData
     })
   }
 }
