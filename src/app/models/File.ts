@@ -23,7 +23,7 @@ class File extends Model implements FileInterface {
       },
       {
         sequelize,
-        modelName: 'file'
+        modelName: 'files'
       }
     )
   }

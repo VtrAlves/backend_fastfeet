@@ -19,13 +19,13 @@ class Deliveryman extends Model implements DeliverymanInterface {
       },
       {
         sequelize,
-        modelName: 'deliveryman'
+        modelName: 'deliverymans'
       }
     )
   }
 
   static associate (models: ModelsInterface): void {
-    this.belongsTo(models.file, { foreignKey: 'avatarId', as: 'avatar' })
+    this.belongsTo(models.files, { foreignKey: 'avatarId', as: 'avatar' })
   }
 }
 
