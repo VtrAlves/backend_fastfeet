@@ -1,7 +1,15 @@
-import express from 'express'
+import express, {
+  Request,
+  Response,
+  NextFunction,
+  ErrorRequestHandler
+} from 'express'
+import Youch from 'youch'
+import { resolve } from 'path'
 
 import routes from './routes'
 
+import 'dotenv/config'
 import './database'
 
 class App {
@@ -12,14 +20,38 @@ class App {
 
     this.middlewares()
     this.routes()
+    this.exceptionHandler()
   }
 
   private middlewares (): void {
     this.server.use(express.json())
+    this.server.use(
+      '/files',
+      express.static(resolve(__dirname, '..', 'tmp', 'uploads'))
+    )
   }
 
   private routes (): void {
     this.server.use(routes)
+  }
+
+  private exceptionHandler (): void {
+    this.server.use(
+      async (
+        err: ErrorRequestHandler,
+        req: Request,
+        res: Response,
+        next: NextFunction
+      ) => {
+        if (process.env.NODE_ENV === 'development') {
+          const errors = new Youch(err, req).toJSON()
+          return res.status(500).json(errors)
+        }
+        return res.status(500).json({
+          message: 'Internal Server Error. Please contact system administrator'
+        })
+      }
+    )
   }
 }
 

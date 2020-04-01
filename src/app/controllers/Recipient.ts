@@ -14,7 +14,7 @@ class RecipientController {
       state: Yup.string().required(),
       cep: Yup.string().length(8)
     })
-    console.log(req.body)
+
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ message: 'Validation fails' })
     }
