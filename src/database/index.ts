@@ -29,7 +29,7 @@ class Database {
 
     models.map(model => model.initialize(this.connection))
     models.map(
-      model => model.associate && model.associate(this.connection.models)
+      (model: any) => model.associate && model.associate(this.connection.models)
     )
   }
 }
