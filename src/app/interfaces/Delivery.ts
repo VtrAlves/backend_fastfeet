@@ -6,7 +6,7 @@ export default interface Delivery {
   product: string
   startDate: Date
   endDate: Date
-  canceledAt: Date
+  cancelledAt: Date
   createdAt: Date
   updatedAt: Date
 }

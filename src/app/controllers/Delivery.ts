@@ -101,7 +101,44 @@ class DeliveryController {
     return res.json({ message: 'Delivery Created successfuly!', delivery })
   }
 
-  async index (req: Request, res: Response): Promise<Response> {}
+  async index (req: Request, res: Response): Promise<Response> {
+    const { page = 1 } = req.query
+
+    const deliveries = await Delivery.findAll({
+      where: { cancelledAt: null },
+      limit: 30,
+      offset: (page - 1) * 20,
+      attributes: ['id', 'product', 'startDate', 'createdAt', 'endDate'],
+      include: [
+        {
+          model: Deliveryman,
+          as: 'deliveryman',
+          attributes: ['id', 'name', 'email']
+        },
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: [
+            'id',
+            'name',
+            'address',
+            'number',
+            'complement',
+            'city',
+            'state',
+            'cep'
+          ]
+        }
+      ]
+    })
+
+    const count = await Delivery.count({
+      where: { cancelledAt: null }
+    })
+
+    res.header({ 'x-total-count': count })
+    return res.json({ message: 'In Development', deliveries })
+  }
 }
 
 export default new DeliveryController()

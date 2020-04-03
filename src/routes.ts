@@ -33,6 +33,7 @@ routes.put('/users/:id', UserController.update)
 
 routes.use(adminMiddleware)
 
+routes.get('/delivery', DeliveryController.index)
 routes.get('/deliveryman', DeliverymanController.index)
 
 routes.post('/delivery', DeliveryController.store)

@@ -11,7 +11,7 @@ class Delivery extends Model implements DeliveryInterface {
   public product: string
   public startDate: Date
   public endDate: Date
-  public canceledAt: Date
+  public cancelledAt: Date
   public createdAt: Date
   public updatedAt: Date
 
@@ -21,7 +21,7 @@ class Delivery extends Model implements DeliveryInterface {
         product: Sequelize.STRING,
         startDate: Sequelize.DATE,
         endDate: Sequelize.DATE,
-        canceledAt: Sequelize.DATE
+        cancelledAt: Sequelize.DATE
       },
       {
         sequelize,
