@@ -44,8 +44,9 @@ class App {
         next: NextFunction
       ) => {
         if (process.env.NODE_ENV === 'development') {
-          const errors = new Youch(err, req).toJSON()
-          return res.status(500).json(errors)
+          new Youch(err, req).toJSON().then(output => {
+            return res.status(500).json(output)
+          })
         }
         return res.status(500).json({
           message: 'Internal Server Error. Please contact system administrator'

@@ -5,6 +5,7 @@ import DeliveryController from './app/controllers/Delivery'
 import DeliverymanController from './app/controllers/Deliveryman'
 import FileController from './app/controllers/File'
 import RecipientController from './app/controllers/Recipient'
+import ScheduleController from './app/controllers/Schedule'
 import SessionController from './app/controllers/Session'
 import UserController from './app/controllers/User'
 
@@ -23,11 +24,14 @@ routes.post('/users', UserController.store)
 routes.use(authMiddleware)
 
 routes.get('/recipients', RecipientController.index)
+routes.get('/deliveryman/:id/deliveries', ScheduleController.index)
 
 routes.post('/files', uploads.single('file'), FileController.store)
 routes.post('/recipients', RecipientController.store)
+routes.post('/delivery/:id/init', ScheduleController.store)
 
 routes.put('/users/:id', UserController.update)
+routes.put('/delivery/:id/end', ScheduleController.update)
 
 /* ADMIN ROUTES */
 

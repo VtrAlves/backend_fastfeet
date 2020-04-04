@@ -25,7 +25,7 @@ module.exports = {
       },
       signatureId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: { model: 'files', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
@@ -36,7 +36,7 @@ module.exports = {
       },
       startDate: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: true
       },
       endDate: {
         type: Sequelize.DATE,
