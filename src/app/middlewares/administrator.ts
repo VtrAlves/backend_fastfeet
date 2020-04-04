@@ -20,8 +20,6 @@ export default async (
   try {
     const decoded = await promisify(jwt.verify)(token, authConfig.secret)
 
-    console.log(decoded)
-
     const { administrator } = decoded
 
     if (!administrator) {

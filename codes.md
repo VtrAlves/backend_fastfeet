@@ -19,3 +19,7 @@ yarn sequelize db:migrate:undo
 yarn sequelize db:migrate:undo:all
 
 #Seeds
+
+#finish feature
+
+git flow feature finish delivery_management

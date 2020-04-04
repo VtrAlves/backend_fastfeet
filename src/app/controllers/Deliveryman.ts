@@ -23,11 +23,13 @@ class DeliverymanController {
 
       const { name, email, avatar } = await Deliveryman.findByPk(id, {
         attributes: ['id', 'name', 'email'],
-        include: {
-          model: File,
-          as: 'avatar',
-          attributes: ['id', 'path', 'url']
-        }
+        include: [
+          {
+            model: File,
+            as: 'avatar',
+            attributes: ['id', 'path', 'url']
+          }
+        ]
       })
 
       return res.status(200).json({
@@ -45,11 +47,13 @@ class DeliverymanController {
   async index (req: Request, res: Response): Promise<Response> {
     const newDeliveryman = await Deliveryman.findAll({
       attributes: ['id', 'name', 'email'],
-      include: {
-        model: File,
-        as: 'avatar',
-        attributes: ['id', 'path', 'url']
-      }
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['id', 'path', 'url']
+        }
+      ]
     })
 
     return res.status(200).json({
@@ -111,19 +115,9 @@ class DeliverymanController {
       return res.status(400).json({ message: 'ID not found' })
     }
 
-    const oldData = {
-      id: deliveryman.id,
-      name: deliveryman.name,
-      email: deliveryman.email,
-      avatarId: deliveryman.avatarId
-    }
-
     deliveryman.destroy()
 
-    return res.json({
-      message: `Deliveryman ${oldData.name} excluded successfuly`,
-      oldData
-    })
+    return res.status(204).send()
   }
 }
 

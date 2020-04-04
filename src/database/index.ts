@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize'
 
+import Delivery from '../app/models/Delivery'
 import Deliveryman from '../app/models/Deliveryman'
 import File from '../app/models/File'
 import User from '../app/models/User'
@@ -7,7 +8,7 @@ import Recipient from '../app/models/Recipient'
 
 import dbConfig from '../config/database'
 
-const models = [Deliveryman, User, Recipient, File]
+const models = [Deliveryman, User, Recipient, File, Delivery]
 
 class Database {
   private connection: Sequelize
@@ -28,7 +29,7 @@ class Database {
 
     models.map(model => model.initialize(this.connection))
     models.map(
-      model => model.associate && model.associate(this.connection.models)
+      (model: any) => model.associate && model.associate(this.connection.models)
     )
   }
 }

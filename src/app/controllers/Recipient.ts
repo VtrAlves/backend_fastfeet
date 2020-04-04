@@ -39,6 +39,23 @@ class RecipientController {
       return res.status(500).json({ message: e })
     }
   }
+
+  async index (req: Request, res: Response): Promise<Response> {
+    const recipients = await Recipient.findAll({
+      attributes: [
+        'id',
+        'name',
+        'address',
+        'number',
+        'complement',
+        'city',
+        'state',
+        'cep'
+      ]
+    })
+
+    return res.json({ message: 'Showing all recipients', recipients })
+  }
 }
 
 export default new RecipientController()

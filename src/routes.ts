@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import multer from 'multer'
 
+import DeliveryController from './app/controllers/Delivery'
 import DeliverymanController from './app/controllers/Deliveryman'
 import FileController from './app/controllers/File'
 import RecipientController from './app/controllers/Recipient'
@@ -21,6 +22,8 @@ routes.post('/users', UserController.store)
 
 routes.use(authMiddleware)
 
+routes.get('/recipients', RecipientController.index)
+
 routes.post('/files', uploads.single('file'), FileController.store)
 routes.post('/recipients', RecipientController.store)
 
@@ -30,12 +33,16 @@ routes.put('/users/:id', UserController.update)
 
 routes.use(adminMiddleware)
 
+routes.get('/delivery', DeliveryController.index)
 routes.get('/deliveryman', DeliverymanController.index)
 
+routes.post('/delivery', DeliveryController.store)
 routes.post('/deliveryman', DeliverymanController.store)
 
+routes.put('/delivery/:id', DeliveryController.update)
 routes.put('/deliveryman/:id', DeliverymanController.update)
 
+routes.delete('/delivery/:id', DeliveryController.delete)
 routes.delete('/deliveryman/:id', DeliverymanController.delete)
 
 export default routes
