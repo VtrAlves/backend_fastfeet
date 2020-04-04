@@ -1,13 +1,19 @@
 import Sequelize, { Model } from 'sequelize'
 
 import DeliveryInterface from '../interfaces/Delivery'
+import DeliverymanInterface from '../interfaces/Deliveryman'
 import ModelsInterface from '../interfaces/Models'
+import RecipientInterface from '../interfaces/Recipient'
+import FileInterface from '../interfaces/File'
 
 class Delivery extends Model implements DeliveryInterface {
   public id: number
   public recipientId: number
+  public recipient: RecipientInterface
   public deliverymanId: number
+  public deliveryman: DeliverymanInterface
   public signatureId: number
+  public signature: FileInterface
   public product: string
   public startDate: Date
   public endDate: Date

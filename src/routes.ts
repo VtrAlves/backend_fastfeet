@@ -39,8 +39,10 @@ routes.get('/deliveryman', DeliverymanController.index)
 routes.post('/delivery', DeliveryController.store)
 routes.post('/deliveryman', DeliverymanController.store)
 
+routes.put('/delivery/:id', DeliveryController.update)
 routes.put('/deliveryman/:id', DeliverymanController.update)
 
+routes.delete('/delivery/:id', DeliveryController.delete)
 routes.delete('/deliveryman/:id', DeliverymanController.delete)
 
 export default routes

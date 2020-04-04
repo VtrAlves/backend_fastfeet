@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import * as Yup from 'yup'
 import { parseISO, isBefore, isAfter, set } from 'date-fns'
-import { pt } from 'date-fns/locale'
 
 import Mail from '../../lib/Mail'
 
@@ -46,32 +45,33 @@ class DeliveryController {
       startDate
     })
 
-    const newDelivery = await Delivery.findByPk(delivery.id, {
-      attributes: ['id', 'product'],
-      include: [
-        {
-          model: Deliveryman,
-          as: 'deliveryman',
-          attributes: ['id', 'name', 'email']
-        },
-        {
-          model: Recipient,
-          as: 'recipient',
-          attributes: [
-            'id',
-            'name',
-            'address',
-            'number',
-            'complement',
-            'city',
-            'state',
-            'cep'
-          ]
-        }
-      ]
-    })
-
-    const { deliveryman, recipient, id } = newDelivery
+    const { deliveryman, recipient, id } = await Delivery.findByPk(
+      delivery.id,
+      {
+        attributes: ['id', 'product'],
+        include: [
+          {
+            model: Deliveryman,
+            as: 'deliveryman',
+            attributes: ['id', 'name', 'email']
+          },
+          {
+            model: Recipient,
+            as: 'recipient',
+            attributes: [
+              'id',
+              'name',
+              'address',
+              'number',
+              'complement',
+              'city',
+              'state',
+              'cep'
+            ]
+          }
+        ]
+      }
+    )
 
     let address: string
 
@@ -108,6 +108,10 @@ class DeliveryController {
       where: { cancelledAt: null },
       limit: 30,
       offset: (page - 1) * 20,
+      order: [
+        ['startDate', 'DESC'],
+        ['createdAt', 'DESC']
+      ],
       attributes: ['id', 'product', 'startDate', 'createdAt', 'endDate'],
       include: [
         {
@@ -137,7 +141,48 @@ class DeliveryController {
     })
 
     res.header({ 'x-total-count': count })
-    return res.json({ message: 'In Development', deliveries })
+    return res.json({ message: 'Showing all deliveries', deliveries })
+  }
+
+  async update (req: Request, res: Response): Promise<Response> {
+    const schema = Yup.object().shape({
+      product: Yup.string(),
+      deliveryman: Yup.number(),
+      recipientId: Yup.number()
+    })
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ message: 'Validation fails' })
+    }
+
+    const { id } = req.params
+
+    const delivery = await Delivery.findByPk(id)
+
+    if (!id || !delivery) {
+      return res.status(400).json({ message: 'ID not found' })
+    }
+
+    const newData = await delivery.update(req.body)
+
+    return res.json({ message: 'Delivery Updated Successfuly', newData })
+  }
+
+  async delete (req: Request, res: Response): Promise<Response> {
+    const { id } = req.params
+
+    const delivery = await Delivery.findByPk(id)
+
+    if (!id || !delivery) {
+      return res.status(400).json({ message: 'Delivery not found' })
+    }
+    try {
+      await delivery.destroy()
+    } catch (err) {
+      return res.json({ err })
+    }
+
+    return res.status(204).send()
   }
 }
 

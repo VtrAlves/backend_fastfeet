@@ -2,11 +2,13 @@ import Sequelize, { Model } from 'sequelize'
 
 import DeliverymanInterface from '../interfaces/Deliveryman'
 import ModelsInterface from '../interfaces/Models'
+import AvatarInterface from '../interfaces/Avatar'
 
 class Deliveryman extends Model implements DeliverymanInterface {
   public id: number
   public name: string
   public avatarId: number
+  public avatar: AvatarInterface
   public email: string
   public createdAt: Date
   public updatedAt: Date
