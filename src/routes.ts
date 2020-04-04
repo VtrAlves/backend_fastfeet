@@ -4,6 +4,7 @@ import multer from 'multer'
 import DeliveryController from './app/controllers/Delivery'
 import DeliverymanController from './app/controllers/Deliveryman'
 import FileController from './app/controllers/File'
+import ProblemController from './app/controllers/Problem'
 import RecipientController from './app/controllers/Recipient'
 import ScheduleController from './app/controllers/Schedule'
 import SessionController from './app/controllers/Session'
@@ -23,6 +24,7 @@ routes.post('/users', UserController.store)
 
 routes.use(authMiddleware)
 
+routes.get('/problems', ProblemController.index)
 routes.get('/recipients', RecipientController.index)
 routes.get('/deliveryman/:id/deliveries', ScheduleController.index)
 

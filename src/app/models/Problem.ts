@@ -1,6 +1,6 @@
 import Sequelize, { Model } from 'sequelize'
 
-import ProblemsInterface from '../interfaces/Problems'
+import ProblemsInterface from '../interfaces/Problem'
 import DeliveryInterface from '../interfaces/Delivery'
 import ModelsInterface from '../interfaces/Models'
 
