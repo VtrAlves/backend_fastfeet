@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
 import * as Yup from 'yup'
-import { parseISO, isBefore, isAfter, set } from 'date-fns'
 
 import Mail from '../../lib/Mail'
 
@@ -13,7 +12,6 @@ class DeliveryController {
     const schema = Yup.object().shape({
       recipientId: Yup.number().required(),
       deliverymanId: Yup.number().required(),
-      signatureId: Yup.number().required(),
       product: Yup.string().required(),
       date: Yup.date().notRequired()
     })
@@ -22,27 +20,12 @@ class DeliveryController {
       return res.status(400).json({ message: 'Validation fails' })
     }
 
-    const { date, deliverymanId, recipientId, signatureId, product } = req.body
-
-    const startDate = parseISO(date)
-
-    const beforeDate = set(startDate, { hours: 8, minutes: 0, seconds: 0 })
-    const afterDate = set(startDate, { hours: 18, minutes: 0, seconds: 0 })
-
-    // Verifica se está dentro do horário indicado
-    if (isBefore(startDate, beforeDate) || isAfter(startDate, afterDate)) {
-      return res
-        .status(400)
-        .json({ message: "Hour isn't avaliable for deliveries" })
-    }
+    const { deliverymanId, recipientId, product } = req.body
 
     const delivery = await Delivery.create({
-      date,
       deliverymanId,
       recipientId,
-      signatureId,
-      product,
-      startDate
+      product
     })
 
     const { deliveryman, recipient, id } = await Delivery.findByPk(

@@ -28,8 +28,10 @@ routes.get('/deliveryman/:id/deliveries', ScheduleController.index)
 
 routes.post('/files', uploads.single('file'), FileController.store)
 routes.post('/recipients', RecipientController.store)
+routes.post('/delivery/:id/init', ScheduleController.store)
 
 routes.put('/users/:id', UserController.update)
+routes.put('/delivery/:id/end', ScheduleController.update)
 
 /* ADMIN ROUTES */
 
