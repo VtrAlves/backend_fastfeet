@@ -165,7 +165,7 @@ class DeliveryController {
 
     const newData = await delivery.update(req.body)
 
-    return res.json({ message: 'Delivery Updated Successfuly', newData })
+    return res.json({ message: `Delivery ${id} Updated Successfuly`, newData })
   }
 
   async delete (req: Request, res: Response): Promise<Response> {
