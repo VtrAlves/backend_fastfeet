@@ -3,12 +3,13 @@ import { Sequelize } from 'sequelize'
 import Delivery from '../app/models/Delivery'
 import Deliveryman from '../app/models/Deliveryman'
 import File from '../app/models/File'
-import User from '../app/models/User'
+import Problems from '../app/models/Problems'
 import Recipient from '../app/models/Recipient'
+import User from '../app/models/User'
 
 import dbConfig from '../config/database'
 
-const models = [Deliveryman, User, Recipient, File, Delivery]
+const models = [Deliveryman, Delivery, File, Problems, Recipient, User]
 
 class Database {
   private connection: Sequelize
