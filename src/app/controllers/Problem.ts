@@ -49,6 +49,10 @@ class ProblemsController {
 
     const delivery = await Delivery.findByPk(problem.deliveryId)
 
+    if (delivery.endDate) {
+      return res.json({ message: 'Delivery already finished' })
+    }
+
     delivery.update({ cancelledAt: new Date() })
 
     return res.json({ message: `Delivery ${problem.deliveryId}`, delivery })

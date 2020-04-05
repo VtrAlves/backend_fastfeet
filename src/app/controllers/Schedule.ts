@@ -164,6 +164,10 @@ class ScheduleController {
       return res.status(400).json({ message: 'Delivery not initiated' })
     }
 
+    if (delivery.endDate) {
+      return res.status(400).json({ message: 'Delivery already finished' })
+    }
+
     const date = parseISO(endDate)
 
     if (

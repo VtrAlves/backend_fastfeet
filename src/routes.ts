@@ -31,6 +31,7 @@ routes.get('/problems', ProblemController.index)
 routes.get('/recipients', RecipientController.index)
 
 routes.post('/delivery/:id/init', ScheduleController.store)
+routes.post('/delivery/:id/problems', DeliveryProblemController.store)
 routes.post('/files', uploads.single('file'), FileController.store)
 routes.post('/recipients', RecipientController.store)
 
