@@ -2,14 +2,14 @@ import { Request, Response } from 'express'
 
 import Delivery from '../models/Delivery'
 import Deliveryman from '../models/Deliveryman'
-import Problems from '../models/Problem'
+import Problem from '../models/Problem'
 import Recipient from '../models/Recipient'
 
 class ProblemsController {
   async index (req: Request, res: Response): Promise<Response> {
     const { page = 1 } = req.query
 
-    const problems = await Problems.findAll({
+    const problems = await Problem.findAll({
       limit: 30,
       offset: (page - 1) * 20,
       attributes: ['id', 'description'],
@@ -36,6 +36,22 @@ class ProblemsController {
     })
 
     return res.json({ message: 'Showing all problems', problems })
+  }
+
+  async delete (req: Request, res: Response): Promise<Response> {
+    const { id } = req.params
+
+    const problem = await Problem.findByPk(id)
+
+    if (!id || !problem) {
+      return res.json({ message: 'Problem not found' })
+    }
+
+    const delivery = await Delivery.findByPk(problem.deliveryId)
+
+    delivery.update({ cancelledAt: new Date() })
+
+    return res.json({ message: `Delivery ${problem.deliveryId}`, delivery })
   }
 }
 

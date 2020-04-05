@@ -35,6 +35,8 @@ routes.post('/delivery/:id/init', ScheduleController.store)
 routes.put('/users/:id', UserController.update)
 routes.put('/delivery/:id/end', ScheduleController.update)
 
+routes.delete('/problem/:id/cancel', ProblemController.delete)
+
 /* ADMIN ROUTES */
 
 routes.use(adminMiddleware)
